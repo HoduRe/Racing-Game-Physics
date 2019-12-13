@@ -21,8 +21,40 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 4);
-	car.chassis_offset.Set(0, 1.5, 0);
+
+		//All chassis parts
+	car.num_chasis_parts = 8;
+	car.chasis_parts = new Chassis[car.num_chasis_parts];
+			//Main Body
+			car.chasis_parts[0].chassis_size.Set(2, 1.5, 4);
+			car.chasis_parts[0].chassis_offset.Set(0, 1.5, 0);
+
+			//front mudward
+			car.chasis_parts[1].chassis_size.Set(2, 0.5, 1);
+			car.chasis_parts[1].chassis_offset.Set(0, 1.f, 2.5f);
+
+			//back mudward
+			car.chasis_parts[2].chassis_size.Set(2, 0.5, 1);
+			car.chasis_parts[2].chassis_offset.Set(0, 1.f, -2.5f);
+
+			//spoiler
+			car.chasis_parts[3].chassis_size.Set(0.1f, 1.f, 0.2f);
+			car.chasis_parts[3].chassis_offset.Set(-0.5, 2.f, -2.75f);
+
+			car.chasis_parts[4].chassis_size.Set(0.1f, 1.f, 0.2f);
+			car.chasis_parts[4].chassis_offset.Set(0.5, 2.f, -2.75f);
+
+			car.chasis_parts[5].chassis_size.Set(2.f, 0.2f, 0.4f);
+			car.chasis_parts[5].chassis_offset.Set(0, 2.4f, -2.75f);
+
+			car.chasis_parts[6].chassis_size.Set(0.1f, 0.6f, 0.4f);
+			car.chasis_parts[6].chassis_offset.Set(-1, 2.4f, -2.75f);
+			
+			car.chasis_parts[7].chassis_size.Set(0.1f, 0.6f, 0.4f);
+			car.chasis_parts[7].chassis_offset.Set(1, 2.4f, -2.75f);
+
+			
+	
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -39,17 +71,17 @@ bool ModulePlayer::Start()
 
 	// Don't change anything below this line ------------------
 
-	float half_width = car.chassis_size.x*0.5f;
-	float half_length = car.chassis_size.z*0.5f;
+	float half_width = car.chasis_parts[0].chassis_size.x*0.5f;
+	float half_length = car.chasis_parts[0].chassis_size.z*0.5f;
 	
 	vec3 direction(0,-1,0);
 	vec3 axis(-1,0,0);
 	
 	car.num_wheels = 4;
-	car.wheels = new Wheel[4];
+	car.wheels = new Wheel[car.num_wheels];
 
 	// FRONT-LEFT ------------------------
-	car.wheels[0].connection.Set(half_width - 0.3f * wheel_width, connection_height, half_length - wheel_radius);
+	car.wheels[0].connection.Set(half_width - 0.3f * wheel_width, connection_height, half_length - (wheel_radius/2));
 	car.wheels[0].direction = direction;
 	car.wheels[0].axis = axis;
 	car.wheels[0].suspensionRestLength = suspensionRestLength;
@@ -61,7 +93,7 @@ bool ModulePlayer::Start()
 	car.wheels[0].steering = true;
 
 	// FRONT-RIGHT ------------------------
-	car.wheels[1].connection.Set(-half_width + 0.3f * wheel_width, connection_height, half_length - wheel_radius);
+	car.wheels[1].connection.Set(-half_width + 0.3f * wheel_width, connection_height, half_length - (wheel_radius/2));
 	car.wheels[1].direction = direction;
 	car.wheels[1].axis = axis;
 	car.wheels[1].suspensionRestLength = suspensionRestLength;

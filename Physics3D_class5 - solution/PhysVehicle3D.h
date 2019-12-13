@@ -6,6 +6,14 @@
 class btRaycastVehicle;
 struct PhysBody3D;
 
+
+struct Chassis
+{
+	vec3 chassis_size;
+	vec3 chassis_offset;
+
+};
+
 struct Wheel
 {
 	vec3 connection; // origin of the ray. Must come from within the chassis
@@ -24,8 +32,8 @@ struct VehicleInfo
 {
 	~VehicleInfo();
 	
-	vec3 chassis_size;
-	vec3 chassis_offset;
+	
+	Chassis* chasis_parts;
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
 	float suspensionCompression; // default to 0.83
@@ -36,6 +44,7 @@ struct VehicleInfo
 
 	Wheel* wheels;
 	int num_wheels;
+	int num_chasis_parts;
 };
 
 
