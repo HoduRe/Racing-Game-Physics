@@ -25,33 +25,42 @@ bool ModulePlayer::Start()
 		//All chassis parts
 	car.num_chasis_parts = 8;
 	car.chasis_parts = new Chassis[car.num_chasis_parts];
-			//Main Body
+
+			//MAIN BODY------------------------------------
 			car.chasis_parts[0].chassis_size.Set(2, 1.5, 4);
 			car.chasis_parts[0].chassis_offset.Set(0, 1.5, 0);
+			car.chasis_parts[0].chassis_color = Black;
 
-			//front mudward
+			//FRONT MUDWARD--------------------------------
 			car.chasis_parts[1].chassis_size.Set(2, 0.5, 1);
 			car.chasis_parts[1].chassis_offset.Set(0, 1.f, 2.5f);
+			car.chasis_parts[1].chassis_color = Black;
 
-			//back mudward
+			//BACK MUDWARD---------------------------------
 			car.chasis_parts[2].chassis_size.Set(2, 0.5, 1);
 			car.chasis_parts[2].chassis_offset.Set(0, 1.f, -2.5f);
+			car.chasis_parts[2].chassis_color = Black;
 
-			//spoiler
-			car.chasis_parts[3].chassis_size.Set(0.1f, 1.f, 0.2f);
-			car.chasis_parts[3].chassis_offset.Set(-0.5, 2.f, -2.75f);
+			//SPOILER--------------------------------------
+			car.chasis_parts[3].chassis_size.Set(0.1f, 1.4f, 0.2f);
+			car.chasis_parts[3].chassis_offset.Set(-0.5, 1.6f, -2.75f);
+			car.chasis_parts[3].chassis_color = Green;
 
-			car.chasis_parts[4].chassis_size.Set(0.1f, 1.f, 0.2f);
-			car.chasis_parts[4].chassis_offset.Set(0.5, 2.f, -2.75f);
+			car.chasis_parts[4].chassis_size.Set(0.1f, 1.4f, 0.2f);
+			car.chasis_parts[4].chassis_offset.Set(0.5, 1.6f, -2.75f);
+			car.chasis_parts[4].chassis_color = Green;
 
 			car.chasis_parts[5].chassis_size.Set(2.f, 0.2f, 0.4f);
 			car.chasis_parts[5].chassis_offset.Set(0, 2.4f, -2.75f);
+			car.chasis_parts[5].chassis_color = Green;
 
 			car.chasis_parts[6].chassis_size.Set(0.1f, 0.6f, 0.4f);
 			car.chasis_parts[6].chassis_offset.Set(-1, 2.4f, -2.75f);
+			car.chasis_parts[6].chassis_color = Green;
 			
 			car.chasis_parts[7].chassis_size.Set(0.1f, 0.6f, 0.4f);
 			car.chasis_parts[7].chassis_offset.Set(1, 2.4f, -2.75f);
+			car.chasis_parts[7].chassis_color = Green;
 
 			
 	
@@ -138,6 +147,8 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+
+	
 
 	return true;
 }

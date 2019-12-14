@@ -44,7 +44,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	float matrix[16];
 	App->player->vehicle->GetTransform(matrix);
-	vec3 newPos(matrix[12], matrix[13] + 5, matrix[14] - 8);
+	vec3 newPos(matrix[12], matrix[13] + 5, matrix[14] - 18);
 
 	Position = newPos;
 	Reference = newPos;

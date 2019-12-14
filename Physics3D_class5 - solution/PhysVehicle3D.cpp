@@ -25,7 +25,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color = Green;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -41,6 +41,7 @@ void PhysVehicle3D::Render()
 	for (int i = 0; i < info.num_chasis_parts; i++)
 	{
 		Cube chassis(info.chasis_parts[i].chassis_size.x, info.chasis_parts[i].chassis_size.y, info.chasis_parts[i].chassis_size.z);
+		chassis.color = info.chasis_parts[i].chassis_color;
 		vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 		btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 		btVector3 offset(info.chasis_parts[i].chassis_offset.x, info.chasis_parts[i].chassis_offset.y, info.chasis_parts[i].chassis_offset.z);

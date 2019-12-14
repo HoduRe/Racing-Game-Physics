@@ -2,16 +2,18 @@
 
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Color.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
+
 
 
 struct Chassis
 {
 	vec3 chassis_size;
 	vec3 chassis_offset;
-
+	Color chassis_color;
 };
 
 struct Wheel
