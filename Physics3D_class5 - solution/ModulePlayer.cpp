@@ -81,7 +81,7 @@ bool ModulePlayer::Start()
 	car.wheels = new Wheel[car.num_wheels];
 
 	// FRONT-LEFT ------------------------
-	car.wheels[0].connection.Set(half_width - 0.3f * wheel_width, connection_height, half_length - (wheel_radius/2));
+	car.wheels[0].connection.Set(half_width - 0.3f * wheel_width, connection_height, half_length - (wheel_radius));
 	car.wheels[0].direction = direction;
 	car.wheels[0].axis = axis;
 	car.wheels[0].suspensionRestLength = suspensionRestLength;
@@ -93,7 +93,7 @@ bool ModulePlayer::Start()
 	car.wheels[0].steering = true;
 
 	// FRONT-RIGHT ------------------------
-	car.wheels[1].connection.Set(-half_width + 0.3f * wheel_width, connection_height, half_length - (wheel_radius/2));
+	car.wheels[1].connection.Set(-half_width + 0.3f * wheel_width, connection_height, half_length - (wheel_radius));
 	car.wheels[1].direction = direction;
 	car.wheels[1].axis = axis;
 	car.wheels[1].suspensionRestLength = suspensionRestLength;
@@ -146,10 +146,14 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+	float velocity = vehicle->GetKmh();
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		if (velocity < 0)
+			brake = BRAKE_POWER;
+		else
+			acceleration = MAX_ACCELERATION;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -165,8 +169,11 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
+	{		
+		if (velocity > 0)
+			brake = BRAKE_POWER;
+		else
+			acceleration = -MAX_ACCELERATION / 2;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
