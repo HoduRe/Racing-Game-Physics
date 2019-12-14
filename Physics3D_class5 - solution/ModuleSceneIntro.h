@@ -5,6 +5,7 @@
 #include "Primitive.h"
 
 #define MAX_SNAKE 2
+#define PRIMITIVE_LIST 60
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -20,6 +21,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void ModuleSceneIntro::CreateCircuit();
 
 public:
 	/*
@@ -41,4 +43,6 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+	Primitive* primitives[PRIMITIVE_LIST];
 };
