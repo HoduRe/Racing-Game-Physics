@@ -12,6 +12,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	checkpoints = 0;
 	startingpos = { 0,0,0 };
 	rot = 0;
+	num_checkpoints = 4;
+	last_checkpoint_pos = { 0,0,0 };
 }
 
 ModulePlayer::~ModulePlayer()
@@ -169,14 +171,14 @@ update_status ModulePlayer::Update(float dt)
 	turn = acceleration = brake = 0.0f;
 	float velocity = vehicle->GetKmh();
 	
+	UpdateState();
 
 	switch (state)
 	{
 
 	case player_state::ST_READY:
 
-		App->audio->PlayFx(start_fx);
-		UpdateState();
+		App->audio->PlayFx(start_fx);	
 
 		break;
 
@@ -188,7 +190,7 @@ update_status ModulePlayer::Update(float dt)
 				brake = BRAKE_POWER;
 			else
 				acceleration = MAX_ACCELERATION;
-		}
+		}		
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
@@ -211,11 +213,26 @@ update_status ModulePlayer::Update(float dt)
 		}
 
 		break;
+
+	case player_state::ST_FINISH:
+
+				
+
+		break;
+		
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		Restart();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		checkpoints++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+	{
+		GoLastCheckpoint();
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -231,53 +248,94 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::UpdateState()
 {	
-	if (chrono.Read() >= 3000)
+	switch (state)
 	{
-		state = player_state::ST_GO;
-		chrono.Stop();
-		chrono.Start();
-	}
+		case player_state::ST_READY:
+			if (chrono.Read() >= 3000)
+			{
+				state = player_state::ST_GO;
+				chrono.Stop();
+				chrono.Start();
+			}
+			break;
+		case player_state::ST_GO:
+			if (checkpoints == num_checkpoints)
+				state = player_state::ST_FINISH;
+				chrono.Stop();
+				finish_timer.Start();
+			break;
+		case player_state::ST_FINISH:						
+
+			if (finish_timer.Read() > 5000)
+			{
+				finish_timer.Stop();
+				Restart();
+			}
+			
+			break;
+	}	
 }
 
 void ModulePlayer::TitleInfo()
 {
-	char title[80];
+	uint current_time = chrono.Read();
+
+	uint miliseconds = current_time % 1000;
+	uint seconds = (current_time / 1000) % 60;
+	uint minutes = (current_time / 1000) / 60;
+
+	char title[95];
 
 	switch (state)
 	{
 		case player_state::ST_READY:
-
-			sprintf_s(title, " Speed: 0 Km/h | Time: 00:00:00 | Checkpoints: 0/4");
+			
+			sprintf_s(title, " Speed: 0 Km/h | Time: 00:00:00 | Checkpoints: 0/%u", num_checkpoints);
 			App->window->SetTitle(title);
 
 		break;
 
 		case player_state::ST_GO:
-
-			uint current_time = chrono.Read();
-
-
-			uint miliseconds = current_time % 1000;
-			uint seconds = (current_time / 1000) % 60;
-			uint minutes = (current_time / 1000) / 60;
 			
-			sprintf_s(title, " Speed: %.1f Km/h | Time: %02d:%02d:%02d | Checkpoints: %i/4", vehicle->GetKmh(), minutes, seconds, miliseconds, checkpoints);
+			sprintf_s(title, " Speed: %.1f Km/h | Time: %02d:%02d:%02d | Checkpoints: %u/%u", vehicle->GetKmh(), minutes, seconds, miliseconds, checkpoints, num_checkpoints);
 			App->window->SetTitle(title);
 		
 		break;
+
+		case player_state::ST_FINISH:			
+			
+			if (best_time > current_time)
+			{
+				best_time = current_time;
+			}
+			uint best_mil = best_time % 1000;
+			uint best_sec = (best_time / 1000) % 60;
+			uint best_min = (best_time / 1000) / 60;
+
+			sprintf_s(title, " Congratulations, you completed the track in %02d:%02d:%02d, your best time is %02d:%02d:%02d ", minutes, seconds, miliseconds, best_min, best_sec, best_mil);
+			App->window->SetTitle(title);
+
+			break;
 
 	}
 	
 }
 
+void ModulePlayer::GoLastCheckpoint()
+{
+	if (checkpoints == 0)
+		vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
+	else
+		vehicle->SetPos(last_checkpoint_pos.x, last_checkpoint_pos.y, last_checkpoint_pos.z);
+}
+
 void ModulePlayer::Restart()
 {	
-	vehicle->ApplyEngineForce(-acceleration);
+	vehicle->ApplyEngineForce(0);
 	vehicle->Turn(0);
 	vehicle->Brake(BRAKE_POWER*1000);
-	
-
 	state = player_state::ST_READY;
+	checkpoints = 0u;
 	chrono.Stop();
 	chrono.Start();
 	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);

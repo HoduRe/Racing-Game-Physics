@@ -4,11 +4,13 @@
 #include "p2Point.h"
 
 
+
 enum class player_state
 {
 	ST_NONE,
 	ST_READY,
 	ST_GO,
+	ST_FINISH
 };
 
 struct PhysVehicle3D;
@@ -33,6 +35,9 @@ public:
 	//shows chrono, laps, etc. in title
 	void TitleInfo();
 
+	//Restores the player to the last checkpoint
+	void GoLastCheckpoint();
+
 	//Restart the game
 	void Restart();
 
@@ -44,9 +49,13 @@ public:
 	float brake;
 	player_state state;
 	Timer chrono;
+	Timer finish_timer;
 	uint start_fx;
 
 	uint checkpoints;
+	uint num_checkpoints;
 	vec3 startingpos;
-	float rot;
+	float* rot;
+	uint best_time;
+	vec3 last_checkpoint_pos;
 };
