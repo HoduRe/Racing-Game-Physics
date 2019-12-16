@@ -39,20 +39,17 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
+	float matrix[16];
+	App->player->vehicle->GetTransform(matrix);
+
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT) {
-		float matrix[16];
-		App->player->vehicle->GetTransform(matrix);
 		vec3 newPos(matrix[12], matrix[13] + 5, matrix[14] - 18);
 
 		Position = newPos;
 		Reference = newPos;
-
-		vec3 car(matrix[12], matrix[13], matrix[14]);
-		LookAt(car);
 	}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-	{
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
@@ -60,8 +57,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position -= Reference;
 
-		if (dx != 0)
-		{
+		if (dx != 0) {
 			float DeltaX = (float)dx * Sensitivity;
 
 			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
@@ -69,22 +65,22 @@ update_status ModuleCamera3D::Update(float dt)
 			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if (dy != 0)
-		{
+		if (dy != 0) {
 			float DeltaY = (float)dy * Sensitivity;
 
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
 
-			if (Y.y < 0.0f)
-			{
+			if (Y.y < 0.0f) {
 				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
 				Y = cross(Z, X);
 			}
 		}
-
 		Position = Reference + Z * length(Position);
 	}
+
+	vec3 car(matrix[12], matrix[13], matrix[14]);
+	LookAt(car);
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();

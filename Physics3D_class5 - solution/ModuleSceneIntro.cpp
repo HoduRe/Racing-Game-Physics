@@ -44,7 +44,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	for (int i = 0; i < PRIMITIVE_LIST; i++) {
 		if (primitives[i] != nullptr) {
-			primitives[i]->InnerRender();
+			primitives[i]->Render();
 		}
 	}
 	p.Render();
@@ -60,7 +60,6 @@ void ModuleSceneIntro::CreateCircuit() {
 	Cube* cube = new Cube(15, 50, 800);
 	primitives[0] = cube;
 	primitives[0]->physbody = App->physics->AddBody(*cube, 0.0f);
-	primitives[0]->physbody->SetPos(500, 25, 20);
 	primitives[0]->SetPos(500, 25, 20);
 	
 }
