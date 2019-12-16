@@ -5,9 +5,13 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
+	checkpoints = 0;
+	startingpos = { 0,0,0 };
+	rot = 0;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -17,6 +21,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+
+	
 
 	VehicleInfo car;
 
@@ -138,7 +144,11 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 5, -10);
+	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
+
+	state = player_state::ST_READY;
+	start_fx = App->audio->LoadFx("assets/start.wav");
+	chrono.Start();
 	
 	return true;
 }
@@ -158,33 +168,54 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 	float velocity = vehicle->GetKmh();
+	
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	switch (state)
 	{
-		if (velocity < 0)
-			brake = BRAKE_POWER;
-		else
-			acceleration = MAX_ACCELERATION;
-	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	case player_state::ST_READY:
+
+		App->audio->PlayFx(start_fx);
+		UpdateState();
+
+		break;
+
+	case player_state::ST_GO:
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		{
+			if (velocity < 0)
+				brake = BRAKE_POWER;
+			else
+				acceleration = MAX_ACCELERATION;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			if (turn < TURN_DEGREES)
+				turn += TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			if (turn > -TURN_DEGREES)
+				turn -= TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			if (velocity > 0)
+				brake = BRAKE_POWER;
+			else
+				acceleration = -MAX_ACCELERATION / 2;
+		}
+
+		break;
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{		
-		if (velocity > 0)
-			brake = BRAKE_POWER;
-		else
-			acceleration = -MAX_ACCELERATION / 2;
+		Restart();
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -193,11 +224,63 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
+	TitleInfo();
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::UpdateState()
+{	
+	if (chrono.Read() >= 3000)
+	{
+		state = player_state::ST_GO;
+		chrono.Stop();
+		chrono.Start();
+	}
+}
+
+void ModulePlayer::TitleInfo()
+{
+	char title[80];
+
+	switch (state)
+	{
+		case player_state::ST_READY:
+
+			sprintf_s(title, " Speed: 0 Km/h | Time: 00:00:00 | Checkpoints: 0/4");
+			App->window->SetTitle(title);
+
+		break;
+
+		case player_state::ST_GO:
+
+			uint current_time = chrono.Read();
+
+
+			uint miliseconds = current_time % 1000;
+			uint seconds = (current_time / 1000) % 60;
+			uint minutes = (current_time / 1000) / 60;
+			
+			sprintf_s(title, " Speed: %.1f Km/h | Time: %02d:%02d:%02d | Checkpoints: %i/4", vehicle->GetKmh(), minutes, seconds, miliseconds, checkpoints);
+			App->window->SetTitle(title);
+		
+		break;
+
+	}
+	
+}
+
+void ModulePlayer::Restart()
+{	
+	vehicle->ApplyEngineForce(-acceleration);
+	vehicle->Turn(0);
+	vehicle->Brake(BRAKE_POWER*1000);
+	
+
+	state = player_state::ST_READY;
+	chrono.Stop();
+	chrono.Start();
+	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
 }
 
 
