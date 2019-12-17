@@ -14,6 +14,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -41,12 +42,19 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	float matrix[16];
 	App->player->vehicle->GetTransform(matrix);
+	vec3 car(matrix[12], matrix[13] + 5, matrix[14]);
+	vec3 newPosition(matrix[12], matrix[13] + 5, matrix[14] - 18);
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT) {
-		vec3 newPos(matrix[12], matrix[13] + 5, matrix[14] - 18);
 
-		Position = newPos;
-		Reference = newPos;
+		Reference = car;
+		Position = newPosition;
+		Position -= Reference;
+
+		X.Set(matrix[0], matrix[1], matrix[2]);
+		Z.Set(matrix[8], matrix[9], matrix[10]);
+
+		Position = Reference - Z * length(Position);
 	}
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
@@ -79,8 +87,7 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = Reference + Z * length(Position);
 	}
 
-	vec3 car(matrix[12], matrix[13], matrix[14]);
-	LookAt(car);
+	LookAt(Reference);
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();

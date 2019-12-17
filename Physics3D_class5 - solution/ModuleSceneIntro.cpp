@@ -34,6 +34,11 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+	for (int i = 0; i < PRIMITIVE_LIST; i++) {
+		delete primitives[i];
+		primitives[i] = nullptr;
+	}
+
 	return true;
 }
 
@@ -61,5 +66,16 @@ void ModuleSceneIntro::CreateCircuit() {
 	primitives[0] = cube;
 	primitives[0]->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives[0]->SetPos(500, 25, 20);
-	
+	cube = new Cube(1000, 50, 15);
+	primitives[1] = cube;
+	primitives[1]->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives[1]->SetPos(-7.5, 25, 425);
+	cube = new Cube(15, 50, 800);
+	primitives[2] = cube;
+	primitives[2]->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives[2]->SetPos(-500, 25, 0);
+	cube = new Cube(1000, 50, 15);
+	primitives[3] = cube;
+	primitives[3]->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives[3]->SetPos(-7.5, 25, -425);
 }
