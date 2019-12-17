@@ -19,7 +19,6 @@ public:
 
 	Primitive();
 
-	void			Update();
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
 	void			SetPos(float x, float y, float z);

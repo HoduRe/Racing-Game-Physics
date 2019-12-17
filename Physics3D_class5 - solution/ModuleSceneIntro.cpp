@@ -20,16 +20,11 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	/*Cube* cube = new Cube(10, 10, 10);
+	for (int i = 0; i < PRIMITIVE_LIST; i++) {
+		primitives[i] = nullptr;
+	}
 
-	//cube->physbody->SetAsSensor(true);
-	//cube->physbody->collision_listeners.add(this);
-	cube->SetPos(500, 25, 20);
-	primitives.PushBack(cube);
-	cube->physbody = App->physics->AddBody(*cube, 0.0f);*/
-
-
-	//CreateCircuit();
+	CreateCircuit();
 
 	return ret;
 }
@@ -39,14 +34,6 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
-	for(int i = 0; i < primitives.Count() ; i++)
-	{
-		primitives[i]->physbody = nullptr;
-		delete primitives[i];
-	}
-
-	primitives.Clear();
-
 	return true;
 }
 
@@ -55,12 +42,8 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
-
-	for (int i = 0; i < primitives.Count(); i++)
-	{
-		if (primitives[i]->physbody != nullptr)
-		{
-			primitives[i]->Update();
+	for (int i = 0; i < PRIMITIVE_LIST; i++) {
+		if (primitives[i] != nullptr) {
 			primitives[i]->Render();
 		}
 	}
@@ -71,12 +54,12 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-
-
 }
 
-void ModuleSceneIntro::CreateCircuit()
-{
-}
-
+void ModuleSceneIntro::CreateCircuit() {
+	Cube* cube = new Cube(15, 50, 800);
+	primitives[0] = cube;
+	primitives[0]->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives[0]->SetPos(500, 25, 20);
 	
+}
