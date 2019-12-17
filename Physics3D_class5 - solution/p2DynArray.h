@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-#define DYN_ARRAY_BLOCK_SIZE 16
+#define DYN_ARRAY_BLOCK_SIZE 32
 
 template<class VALUE>
 class p2DynArray

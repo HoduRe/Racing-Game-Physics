@@ -197,7 +197,7 @@ update_status ModulePlayer::Update(float dt)
 			if (turn < TURN_DEGREES)
 				turn += TURN_DEGREES;
 		}
-
+		
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
 			if (turn > -TURN_DEGREES)
@@ -338,7 +338,7 @@ void ModulePlayer::Restart()
 	checkpoints = 0u;
 	chrono.Stop();
 	chrono.Start();
-	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
+	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);	
 }
 
 

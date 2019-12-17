@@ -186,10 +186,7 @@ bool ModulePhysics3D::CleanUp()
 	vehicles.clear();
 
 	delete vehicle_raycaster;
-	for (int i = 0; i < PRIMITIVE_LIST; i++) {
-		delete App->scene_intro->primitives[i];
-		App->scene_intro->primitives[i] = nullptr;
-	}
+
 	delete world;
 
 	return true;

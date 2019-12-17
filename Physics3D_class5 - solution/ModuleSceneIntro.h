@@ -44,5 +44,5 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Primitive* primitives[PRIMITIVE_LIST];
+	p2DynArray<Primitive*> primitives;
 };
