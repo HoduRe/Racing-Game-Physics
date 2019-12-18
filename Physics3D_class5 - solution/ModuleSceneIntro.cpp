@@ -75,47 +75,61 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::CreateCircuit()
 {
-
-	Cube* cube = new Cube(10, 10, 10);
-
-	cube->SetPos(10, 5, 20);
+	Cube* cube = new Cube(1000, 10, 1000);
+	cube->SetPos(0, 45, 0);	// Ground
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
-	cube->physbody->SetAsSensor(true);
-	cube->physbody->collision_listeners.add(this);
-	cube->physbody->parent = cube;
-	sensors.PushBack(cube->physbody);
-
-
-
-	Cube* cubee = new Cube(10, 10, 10);
-
-	cubee->SetPos(30, 5, 20);
-	cubee->physbody = App->physics->AddBody(*cubee, 0.0f);
-	primitives.PushBack(cubee);
-	cubee->physbody->SetAsSensor(true);
-	cubee->physbody->collision_listeners.add(this);
-	cubee->physbody->parent = cubee;
-	sensors.PushBack(cubee->physbody);
-
-	Cube* cubeee = new Cube(10, 10, 10);
-
-	cubeee->SetPos(50, 5, 20);
-	cubeee->physbody = App->physics->AddBody(*cubeee, 0.0f);
-	primitives.PushBack(cubeee);
-	cubeee->physbody->SetAsSensor(true);
-	cubeee->physbody->collision_listeners.add(this);
-	cubeee->physbody->parent = cubeee;
-	sensors.PushBack(cubeee->physbody);
-
-	Cube* cubeeee = new Cube(10, 10, 10);
-
-	cubeeee->SetPos(-10, 5, 20);
-	cubeeee->physbody = App->physics->AddBody(*cubeeee, 0.0f);
-	primitives.PushBack(cubeeee);
-	cubeeee->physbody->SetAsSensor(true);
-	cubeeee->physbody->collision_listeners.add(this);
-	cubeeee->physbody->parent = cubeeee;
-	sensors.PushBack(cubeeee->physbody);
+	cube = new Cube(50, 50, 800);
+	cube->SetPos(525, 75, 100);	// high left border
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(1000, 50, 50);
+	cube->SetPos(0, 75, 525);	// upper border
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(50, 50, 1000);
+	cube->SetPos(-525, 75, 0);	// right border
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(1000, 50, 50);
+	cube->SetPos(0, 75, -525);	// lower border
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(100, 50, 50);
+	cube->SetPos(550, 75, -275);	// High left hallway
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(100, 50, 50);
+	cube->SetPos(550, 75, -425);	// Low left hallway
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(50, 50, 100);
+	cube->SetPos(575, 75, -250);	// High right square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(50, 50, 100);
+	cube->SetPos(575, 75, -450);	// Low right square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(100, 50, 50);
+	cube->SetPos(650, 75, -175);	// High square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(100, 50, 50);
+	cube->SetPos(650, 75, -475);	// Low square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(50, 50, 300);
+	cube->SetPos(725, 75, -350);	// Left square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(50, 50, 100);
+	cube->SetPos(525, 75, -450);	// Left square wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(100, 10, 300);
+	cube->SetPos(650, 45, -350);	// Ground
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
 }
 	
