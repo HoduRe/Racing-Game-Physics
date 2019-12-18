@@ -334,9 +334,17 @@ void ModulePlayer::GoLastCheckpoint()
 
 void ModulePlayer::Restart()
 {	
-	vehicle->ApplyEngineForce(0);
-	vehicle->Turn(0);
-	vehicle->Brake(BRAKE_POWER*1000);
+
+
+	mat4x4 rot;
+	btTransform transform;
+	transform.setIdentity();
+	transform.setFromOpenGLMatrix(&rot);
+
+	vehicle->SetTransform(&rot);
+	vehicle->vehicle_body->setAngularVelocity({ 0,0,0 });
+	vehicle->vehicle_body->setLinearVelocity({ 0,0,0 });
+
 	state = player_state::ST_READY;
 	checkpoints = 0u;
 	chrono.Stop();
