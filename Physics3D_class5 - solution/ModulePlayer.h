@@ -55,7 +55,8 @@ public:
 	uint checkpoints;
 	uint num_checkpoints;
 	vec3 startingpos;
-	float* rot;
+	float rot;
+	float rott;
 	uint best_time;
 	vec3 last_checkpoint_pos;
 };

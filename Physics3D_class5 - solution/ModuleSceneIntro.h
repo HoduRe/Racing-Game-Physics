@@ -21,7 +21,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	void ModuleSceneIntro::CreateCircuit();
+	void CreateCircuit();
 
 public:
 	/*
@@ -44,5 +44,6 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Primitive* primitives[PRIMITIVE_LIST];
+	p2DynArray<Primitive*> primitives;
+	p2DynArray<PhysBody3D*> sensors;
 };

@@ -152,6 +152,9 @@ bool ModulePlayer::Start()
 	start_fx = App->audio->LoadFx("assets/start.wav");
 	chrono.Start();
 	
+
+	
+
 	return true;
 }
 
@@ -197,7 +200,7 @@ update_status ModulePlayer::Update(float dt)
 			if (turn < TURN_DEGREES)
 				turn += TURN_DEGREES;
 		}
-
+		
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
 			if (turn > -TURN_DEGREES)
@@ -339,6 +342,13 @@ void ModulePlayer::Restart()
 	chrono.Stop();
 	chrono.Start();
 	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
+
+	for (int i = 0;  i < App->scene_intro->sensors.Count();  i++)
+	{
+		App->scene_intro->sensors[i]->sensor_on = false;
+		App->scene_intro->sensors[i]->parent->color = White;
+
+	}
 }
 
 

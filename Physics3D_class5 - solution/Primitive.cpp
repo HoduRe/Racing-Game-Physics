@@ -18,6 +18,12 @@ PrimitiveTypes Primitive::GetType() const
 }
 
 // ------------------------------------------------------------
+void Primitive::Update()
+{
+	physbody->GetTransform(&transform);
+}
+
+// ------------------------------------------------------------
 void Primitive::Render() const
 {
 	glPushMatrix();
@@ -85,7 +91,6 @@ void Primitive::InnerRender() const
 void Primitive::SetPos(float x, float y, float z)
 {
 	transform.translate(x, y, z);
-	physbody->SetTransform(&transform);
 }
 
 // ------------------------------------------------------------
