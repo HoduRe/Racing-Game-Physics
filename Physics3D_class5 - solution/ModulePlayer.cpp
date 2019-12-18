@@ -11,7 +11,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	turn = acceleration = brake = 0.0f;
 	checkpoints = 0;
 	startingpos = { 0, 50, 0 };
-	rot = 0;
 	num_checkpoints = 4;
 	last_checkpoint_pos = { 0, 0, 0 };
 }
@@ -35,39 +34,39 @@ bool ModulePlayer::Start()
 	car.chasis_parts = new Chassis[car.num_chasis_parts];
 
 			//MAIN BODY------------------------------------
-			car.chasis_parts[0].chassis_size.Set(2, 1.5, 4);
-			car.chasis_parts[0].chassis_offset.Set(0, 1.5, 0);
+			car.chasis_parts[0].chassis_size.Set(2.5f, 1.5f, 4.f);
+			car.chasis_parts[0].chassis_offset.Set(0.f, 1.6f, 0.f);
 			car.chasis_parts[0].chassis_color = Black;
 
 			//FRONT MUDWARD--------------------------------
-			car.chasis_parts[1].chassis_size.Set(2, 0.5, 1);
-			car.chasis_parts[1].chassis_offset.Set(0, 1.f, 2.5f);
+			car.chasis_parts[1].chassis_size.Set(2.5f, 0.5f, 1.5f);
+			car.chasis_parts[1].chassis_offset.Set(0, 1.1f, 2.75f);
 			car.chasis_parts[1].chassis_color = Black;
 
 			//BACK MUDWARD---------------------------------
-			car.chasis_parts[2].chassis_size.Set(2, 0.5, 1);
-			car.chasis_parts[2].chassis_offset.Set(0, 1.f, -2.5f);
+			car.chasis_parts[2].chassis_size.Set(2.5f, 0.5f, 1.f);
+			car.chasis_parts[2].chassis_offset.Set(0.f, 1.1f, -2.5f);
 			car.chasis_parts[2].chassis_color = Black;
 
 			//SPOILER--------------------------------------
 			car.chasis_parts[3].chassis_size.Set(0.1f, 1.4f, 0.2f);
-			car.chasis_parts[3].chassis_offset.Set(-0.5, 1.6f, -2.75f);
+			car.chasis_parts[3].chassis_offset.Set(-0.5f, 1.7f, -2.75f);
 			car.chasis_parts[3].chassis_color = Green;
 
 			car.chasis_parts[4].chassis_size.Set(0.1f, 1.4f, 0.2f);
-			car.chasis_parts[4].chassis_offset.Set(0.5, 1.6f, -2.75f);
+			car.chasis_parts[4].chassis_offset.Set(0.5, 1.7f, -2.75f);
 			car.chasis_parts[4].chassis_color = Green;
 
-			car.chasis_parts[5].chassis_size.Set(2.f, 0.2f, 0.4f);
-			car.chasis_parts[5].chassis_offset.Set(0, 2.4f, -2.75f);
+			car.chasis_parts[5].chassis_size.Set(2.5f, 0.2f, 0.4f);
+			car.chasis_parts[5].chassis_offset.Set(0.f, 2.5f, -2.75f);
 			car.chasis_parts[5].chassis_color = Green;
 
 			car.chasis_parts[6].chassis_size.Set(0.1f, 0.6f, 0.4f);
-			car.chasis_parts[6].chassis_offset.Set(-1, 2.4f, -2.75f);
+			car.chasis_parts[6].chassis_offset.Set(-1.3f, 2.5f, -2.75f);
 			car.chasis_parts[6].chassis_color = Green;
 			
 			car.chasis_parts[7].chassis_size.Set(0.1f, 0.6f, 0.4f);
-			car.chasis_parts[7].chassis_offset.Set(1, 2.4f, -2.75f);
+			car.chasis_parts[7].chassis_offset.Set(1.3f, 2.5f, -2.75f);
 			car.chasis_parts[7].chassis_color = Green;
 
 			
@@ -326,6 +325,10 @@ void ModulePlayer::TitleInfo()
 
 void ModulePlayer::GoLastCheckpoint()
 {
+
+	vehicle->vehicle_body->setAngularVelocity({ 0,0,0 });
+	vehicle->vehicle_body->setLinearVelocity({ 0,0,0 });
+
 	if (checkpoints == 0)
 		vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
 	else
@@ -355,7 +358,6 @@ void ModulePlayer::Restart()
 	{
 		App->scene_intro->sensors[i]->sensor_on = false;
 		App->scene_intro->sensors[i]->parent->color = White;
-
 	}
 }
 
