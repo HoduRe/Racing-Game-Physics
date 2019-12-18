@@ -34,17 +34,17 @@ bool ModulePlayer::Start()
 	car.chasis_parts = new Chassis[car.num_chasis_parts];
 
 			//MAIN BODY------------------------------------
-			car.chasis_parts[0].chassis_size.Set(2.5f, 1.5f, 4.f);
+			car.chasis_parts[0].chassis_size.Set(3.f, 1.5f, 4.f);
 			car.chasis_parts[0].chassis_offset.Set(0.f, 1.6f, 0.f);
 			car.chasis_parts[0].chassis_color = Black;
 
 			//FRONT MUDWARD--------------------------------
-			car.chasis_parts[1].chassis_size.Set(2.5f, 0.5f, 1.5f);
+			car.chasis_parts[1].chassis_size.Set(3.f, 0.5f, 1.5f);
 			car.chasis_parts[1].chassis_offset.Set(0, 1.1f, 2.75f);
 			car.chasis_parts[1].chassis_color = Black;
 
 			//BACK MUDWARD---------------------------------
-			car.chasis_parts[2].chassis_size.Set(2.5f, 0.5f, 1.f);
+			car.chasis_parts[2].chassis_size.Set(3.f, 0.5f, 1.f);
 			car.chasis_parts[2].chassis_offset.Set(0.f, 1.1f, -2.5f);
 			car.chasis_parts[2].chassis_color = Black;
 
@@ -190,8 +190,10 @@ update_status ModulePlayer::Update(float dt)
 		{
 			if (velocity < 0)
 				brake = BRAKE_POWER;
-			else
+			else if (velocity < 130.0f)
 				acceleration = MAX_ACCELERATION;
+			else
+				acceleration = 0;
 		}		
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
