@@ -132,36 +132,59 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->SetPos(650, 45, -350);	// Ground
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
-
-	cube = new Cube(10, 11, 10);
-
-	cube->SetPos(10, 55, 20);
+	cube = new Cube(100, 10, 20);
+	cube->SetPos(550, 45, -350);	// Left hallway
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
-	cube->physbody->SetAsSensor(true);
-	cube->physbody->collision_listeners.add(this);
-	cube->physbody->parent = cube;
-	sensors.PushBack(cube->physbody);
-
-	Cube* cubee = new Cube(10, 10, 10);
-
-	cubee->SetPos(30, 55, 20);
-	cubee->physbody = App->physics->AddBody(*cubee, 0.0f);
-	primitives.PushBack(cubee);
-	cubee->physbody->SetAsSensor(true);
-	cubee->physbody->collision_listeners.add(this);
-	cubee->physbody->parent = cubee;
-	sensors.PushBack(cubee->physbody);
-
-	Cube* cubeee = new Cube(10, 10, 10);
-
-	cubeee->SetPos(50, 55, 20);
-	cubeee->physbody = App->physics->AddBody(*cubeee, 0.0f);
-	primitives.PushBack(cubeee);
-	cubeee->physbody->SetAsSensor(true);
-	cubeee->physbody->collision_listeners.add(this);
-	cubeee->physbody->parent = cubeee;
-	sensors.PushBack(cubeee->physbody);
+	cube = new Cube(20, 20, 200);
+	cube->SetPos(0, 45, -250);	// Ramp
+	cube->SetRotation(-20, (0, 0, 1));
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(30, 10, 30);
+	cube->SetPos(-10, 70, -110);	// Flying platform
+	cube->SetRotation(-20, (0, 0, 0.707));
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(30, 50, 30);
+	cube->SetPos(-250, 75, -200);	// Higher box hideout wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(30, 50, 30);
+	cube->SetPos(-250, 75, -240);	// Lower box hideout wall
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(30, 10, 10);
+	cube->SetPos(-250, 95, -220);	// Box hideout arch
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(5, 10, 10);
+	cube->color.r = 255;
+	cube->color.b = 0;
+	cube->color.g = 0;
+	cube->SetPos(-237.5, 55, -220);	// Bottom left constraint box
+	cube->physbody = App->physics->AddBody(*cube, 0.1f);
+	primitives.PushBack(cube);
+	cube = new Cube(5, 10, 10);
+	cube->color.r = 255;
+	cube->color.b = 0;
+	cube->color.g = 0;
+	cube->SetPos(-237.5, 65, -220);	// Upper left constraint box
+	cube->physbody = App->physics->AddBody(*cube, 0.1f);
+	primitives.PushBack(cube);
+	cube = new Cube(5, 10, 10);
+	cube->color.r = 255;
+	cube->color.b = 0;
+	cube->color.g = 0;
+	cube->SetPos(-262.5, 55, -220);	// Bottom right constraint box
+	cube->physbody = App->physics->AddBody(*cube, 0.1f);
+	primitives.PushBack(cube);
+	cube = new Cube(5, 10, 10);
+	cube->color.r = 255;
+	cube->color.b = 0;
+	cube->color.g = 0;
+	cube->SetPos(-262.5, 65, -220);	// Upper right constraint box
+	cube->physbody = App->physics->AddBody(*cube, 0.1f);
+	primitives.PushBack(cube);
 
 }
-	
