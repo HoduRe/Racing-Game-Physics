@@ -186,5 +186,80 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->SetPos(-262.5, 65, -220);	// Upper right constraint box
 	cube->physbody = App->physics->AddBody(*cube, 0.1f);
 	primitives.PushBack(cube);
-
+	cube = new Cube(200, 20, 100);
+	cube->SetPos(200, 45, -350);	// Left ramp
+	cube->SetRotation(-20, (0, 0, 1));
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(200, 20, 100);
+	cube->SetPos(-50, 45, -350);	// Right ramp
+	cube->SetRotation(20, (0, 0, 1));
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 55, 200);	// Tower box 1
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 65, 200);	// Tower box 2
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 75, 200);	// Tower box 3
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 85, 200);	// Tower box 4
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 95, 200);	// Tower box 5
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(10, 10, 10);
+	cube->SetPos(350, 105, 200);	// Tower box 6
+	cube->color.r = 0;
+	cube->color.b = 0;
+	cube->color.g = 255;
+	cube->physbody = App->physics->AddBody(*cube, 0.01f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-300, 85, 200);	// Laberynth 1
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-280, 85, 220);	// Laberynth 2
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-310, 85, 280);	// Laberynth 3
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-350, 85, 180);	// Laberynth 4
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-400, 85, 300);	// Laberynth 5
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
+	cube = new Cube(20, 70, 20);
+	cube->SetPos(-380, 85, 250);	// Laberynth 6
+	cube->physbody = App->physics->AddBody(*cube, 0.0f);
+	primitives.PushBack(cube);
 }
