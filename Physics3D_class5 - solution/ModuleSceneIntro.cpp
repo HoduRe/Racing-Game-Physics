@@ -304,7 +304,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->collision_listeners.add(this);
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
-	cylinder = new Cylinder(6.0f, 1.0f);
+	cylinder = new Cylinder(10.0f, 1.0f);
 	cylinder->SetPos(75, 84, -350);	// Ramps checkpoint
 	cylinder->color.r = 0;
 	cylinder->color.b = 255;
