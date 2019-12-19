@@ -32,6 +32,7 @@ public:
 	//Check if player can start or not.
 	void UpdateState();
 
+
 	//shows chrono, laps, etc. in title
 	void TitleInfo();
 

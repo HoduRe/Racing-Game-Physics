@@ -77,7 +77,7 @@ bool ModulePlayer::Start()
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 50.5;
-	car.maxSuspensionForce = 6000.0f;
+	car.maxSuspensionForce = 3000.0f;
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
@@ -328,8 +328,15 @@ void ModulePlayer::TitleInfo()
 void ModulePlayer::GoLastCheckpoint()
 {
 
+	mat4x4 rot;
+	btTransform transform;
+	transform.setIdentity();
+	transform.setFromOpenGLMatrix(&rot);
+	vehicle->SetTransform(&rot);
+
 	vehicle->vehicle_body->setAngularVelocity({ 0,0,0 });
 	vehicle->vehicle_body->setLinearVelocity({ 0,0,0 });
+	
 
 	if (checkpoints == 0)
 		vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
