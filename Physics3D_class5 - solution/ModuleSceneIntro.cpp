@@ -68,7 +68,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->is_sensor && !body1->sensor_on)
 	{
 		body1->sensor_on = true;
-		body1->parent->color = Blue;
+		body1->parent->color = Purple;
 		App->player->checkpoints++;
 		App->player->last_checkpoint_pos = body1->GetPos();
 	}	
@@ -262,4 +262,72 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->SetPos(-380, 85, 250);	// Laberynth 6
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
+
+	// Chekpoints
+	Cylinder* cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(0, 54, 50);	// Front checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(-295, 54, 220);	// Laberynth checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(-10, 79, -110);	// Flying platform checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(6.0f, 1.0f);
+	cylinder->SetPos(75, 84, -350);	// Ramps checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(-250, 54, -220);	// Box hideout checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(650, 54, -350);	// Outskirts checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
 }
