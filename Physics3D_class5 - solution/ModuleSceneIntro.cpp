@@ -21,7 +21,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	checkpoint_fx = App->audio->LoadFx("assets/checkpoint.wav");
-	App->audio->PlayMusic("assets/initialD.ogg");
+	
 
 	CreateCircuit();
 
@@ -78,6 +78,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::CreateCircuit()
 {
+	
 	Cube* cube = new Cube(1000, 10, 1000);
 	cube->SetPos(0, 45, 0);	// Ground
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
@@ -161,31 +162,35 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
 	cube = new Cube(5, 10, 10);
+	cube->startingPos = { -237.5, 55.f, -220.f };
 	cube->color.r = 255;
 	cube->color.b = 0;
 	cube->color.g = 0;
-	cube->SetPos(-237.5, 55, -220);	// Bottom left constraint box
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Bottom left constraint box
 	cube->physbody = App->physics->AddBody(*cube, 0.1f);
 	primitives.PushBack(cube);
 	cube = new Cube(5, 10, 10);
+	cube->startingPos = { -237.5, 65.f, -220.f };
 	cube->color.r = 255;
 	cube->color.b = 0;
 	cube->color.g = 0;
-	cube->SetPos(-237.5, 65, -220);	// Upper left constraint box
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Upper left constraint box
 	cube->physbody = App->physics->AddBody(*cube, 0.1f);
 	primitives.PushBack(cube);
 	cube = new Cube(5, 10, 10);
+	cube->startingPos = { -262.5f, 55.f, -220.f };
 	cube->color.r = 255;
 	cube->color.b = 0;
 	cube->color.g = 0;
-	cube->SetPos(-262.5, 55, -220);	// Bottom right constraint box
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Bottom right constraint box
 	cube->physbody = App->physics->AddBody(*cube, 0.1f);
 	primitives.PushBack(cube);
 	cube = new Cube(5, 10, 10);
+	cube->startingPos = { -262.5f, 65.f, -220.f };
 	cube->color.r = 255;
 	cube->color.b = 0;
 	cube->color.g = 0;
-	cube->SetPos(-262.5, 65, -220);	// Upper right constraint box
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Upper right constraint box
 	cube->physbody = App->physics->AddBody(*cube, 0.1f);
 	primitives.PushBack(cube);
 	cube = new Cube(200, 20, 100);
@@ -199,7 +204,8 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 55, 200);	// Tower box 1
+	cube->startingPos = { 350.f, 55.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 1
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -207,7 +213,8 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(cube);
 	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 65, 200);	// Tower box 2
+	cube->startingPos = { 350.f, 65.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 2
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -215,7 +222,8 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(cube);
 	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 75, 200);	// Tower box 3
+	cube->startingPos = { 350.f, 75.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 3
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -223,7 +231,8 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(cube);
 	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 85, 200);	// Tower box 4
+	cube->startingPos = { 350.f, 85.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 4
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -231,7 +240,8 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(cube);
 	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 95, 200);	// Tower box 5
+	cube->startingPos = { 350.f, 95.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 5
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -239,7 +249,8 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(cube);
 	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
-	cube->SetPos(350, 105, 200);	// Tower box 6
+	cube->startingPos = { 350.f, 105.f, 200.f };
+	cube->SetPos(cube->startingPos.x, cube->startingPos.y, cube->startingPos.z);	// Tower box 6
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
@@ -306,7 +317,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->collision_listeners.add(this);
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
-	cylinder = new Cylinder(6.0f, 1.0f);
+	cylinder = new Cylinder(10.0f, 5.0f);
 	cylinder->SetPos(75, 78, -350);	// Ramps checkpoint
 	cylinder->color.r = 0;
 	cylinder->color.b = 255;
@@ -340,7 +351,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
 	cylinder = new Cylinder(3.0f, 1.0f);
-	cylinder->SetPos(350, 115, 200);	// greentower checkpoint
+	cylinder->SetPos(340, 95, 200);	// Greentower checkpoint
 	cylinder->color.r = 0;
 	cylinder->color.b = 255;
 	cylinder->color.g = 0;
@@ -363,4 +374,12 @@ void ModuleSceneIntro::CreateCircuit()
 		}
 	}
 
+}
+
+void ModuleSceneIntro::Reset()
+{
+	for (int i = 0; i < scenario_elements.Count(); i++)
+	{
+		scenario_elements[i]->parent->SetPos(scenario_elements[i]->parent->startingPos.x, scenario_elements[i]->parent->startingPos.y, scenario_elements[i]->parent->startingPos.z);
+	}
 }

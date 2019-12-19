@@ -351,7 +351,6 @@ void ModulePlayer::GoLastCheckpoint()
 void ModulePlayer::Restart()
 {	
 
-
 	mat4x4 rot;
 	btTransform transform;
 	transform.setIdentity();
@@ -370,8 +369,11 @@ void ModulePlayer::Restart()
 	for (int i = 0;  i < App->scene_intro->sensors.Count();  i++)
 	{
 		App->scene_intro->sensors[i]->sensor_on = false;
-		App->scene_intro->sensors[i]->parent->color = White;
+		App->scene_intro->sensors[i]->parent->color.b = 255;
 	}
+
+	App->scene_intro->Reset();
+	
 }
 
 

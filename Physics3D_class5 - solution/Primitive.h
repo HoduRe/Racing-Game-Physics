@@ -33,6 +33,7 @@ public:
 	PhysBody3D* physbody;
 	mat4x4 transform;
 	bool axis,wire;
+	vec3 startingPos = { 0.f,0.f,0.f };
 
 protected:
 	PrimitiveTypes type;
