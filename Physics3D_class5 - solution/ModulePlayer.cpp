@@ -238,7 +238,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
-		Restart();
+		App->reset->reset = true;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
@@ -276,7 +276,7 @@ void ModulePlayer::UpdateState()
 			state = player_state::ST_GO;
 			break;
 		case player_state::ST_GO:
-			if (checkpoints == num_checkpoints)
+			if (checkpoints >= num_checkpoints)
 				state = player_state::ST_FINISH;
 				chrono.Stop();
 				finish_timer.Start();
@@ -286,7 +286,7 @@ void ModulePlayer::UpdateState()
 			if (finish_timer.Read() > 5000)
 			{
 				finish_timer.Stop();
-				Restart();
+				App->reset->reset = true;
 			}
 			
 			break;
@@ -357,33 +357,6 @@ void ModulePlayer::GoLastCheckpoint()
 		vehicle->SetPos(last_checkpoint_pos.x, last_checkpoint_pos.y, last_checkpoint_pos.z);
 }
 
-void ModulePlayer::Restart()
-{	
-
-	mat4x4 rot;
-	btTransform transform;
-	transform.setIdentity();
-	transform.setFromOpenGLMatrix(&rot);
-
-	vehicle->SetTransform(&rot);
-	vehicle->vehicle_body->setAngularVelocity({ 0,0,0 });
-	vehicle->vehicle_body->setLinearVelocity({ 0,0,0 });
-
-	state = player_state::ST_READY;
-	checkpoints = 0u;
-	chrono.Stop();
-	chrono.Start();
-	vehicle->SetPos(startingpos.x, startingpos.y, startingpos.z);
-
-	for (int i = 0;  i < App->scene_intro->sensors.Count();  i++)
-	{
-		App->scene_intro->sensors[i]->sensor_on = false;
-		App->scene_intro->sensors[i]->parent->color.b = 255;
-	}
-
-	App->scene_intro->Reset();
-	
-}
 
 
 

@@ -38,8 +38,12 @@ bool ModuleSceneIntro::CleanUp()
 		primitives[i]->physbody = nullptr;
 		delete primitives[i];
 	}
+	for (int i = 0; i < sensors.Count(); i++) { sensors[i] = nullptr; }
+	for (int i = 0; i < greentower_constraint.Count(); i++) { greentower_constraint[i] = nullptr; }
 
 	primitives.Clear();
+	sensors.Clear();
+	greentower_constraint.Clear();
 
 	return true;
 }
@@ -374,12 +378,4 @@ void ModuleSceneIntro::CreateCircuit()
 		}
 	}
 
-}
-
-void ModuleSceneIntro::Reset()
-{
-	for (int i = 0; i < scenario_elements.Count(); i++)
-	{
-		scenario_elements[i]->parent->SetPos(scenario_elements[i]->parent->startingPos.x, scenario_elements[i]->parent->startingPos.y, scenario_elements[i]->parent->startingPos.z);
-	}
 }

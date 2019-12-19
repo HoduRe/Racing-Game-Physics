@@ -23,8 +23,6 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateCircuit();
 
-	void Reset();
-
 public:
 
 
@@ -44,7 +42,6 @@ public:
 	p2DynArray<Primitive*> primitives;
 	p2DynArray<PhysBody3D*> sensors;
 	p2DynArray<PhysBody3D*> greentower_constraint;
-	p2DynArray<PhysBody3D*> scenario_elements;
 
 	uint checkpoint_fx;
 };

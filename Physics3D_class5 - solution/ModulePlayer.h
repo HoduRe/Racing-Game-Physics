@@ -40,9 +40,6 @@ public:
 	//Restores the player to the last checkpoint
 	void GoLastCheckpoint();
 
-	//Restart the game
-	void Restart();
-
 public:
 
 	PhysVehicle3D* vehicle;
