@@ -11,7 +11,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	turn = acceleration = brake = 0.0f;
 	checkpoints = 0;
 	startingpos = { 0, 50, 0 };
-	num_checkpoints = 4;
+	num_checkpoints = 0; 
 	last_checkpoint_pos = { 0, 0, 0 };
 }
 
@@ -23,7 +23,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	
+	num_checkpoints = App->scene_intro->sensors.Count();
 
 	VehicleInfo car;
 

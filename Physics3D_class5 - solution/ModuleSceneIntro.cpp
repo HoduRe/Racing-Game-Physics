@@ -203,7 +203,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
 	cube->SetPos(350, 65, 200);	// Tower box 2
 	cube->color.r = 0;
@@ -211,7 +211,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
 	cube->SetPos(350, 75, 200);	// Tower box 3
 	cube->color.r = 0;
@@ -219,7 +219,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
 	cube->SetPos(350, 85, 200);	// Tower box 4
 	cube->color.r = 0;
@@ -227,7 +227,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(10, 10, 10);
 	cube->SetPos(350, 95, 200);	// Tower box 5
 	cube->color.r = 0;
@@ -235,14 +235,15 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
+	cube = new Cube(10, 10, 10);
 	cube->SetPos(350, 105, 200);	// Tower box 6
 	cube->color.r = 0;
 	cube->color.b = 0;
 	cube->color.g = 255;
 	cube->physbody = App->physics->AddBody(*cube, 0.01f);
 	primitives.PushBack(cube);
-	greentower_constraint.PushBack(cube);
+	greentower_constraint.PushBack(cube->physbody);
 	cube = new Cube(20, 70, 20);
 	cube->SetPos(-300, 85, 200);	// Laberynth 1
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
@@ -268,23 +269,6 @@ void ModuleSceneIntro::CreateCircuit()
 	cube->physbody = App->physics->AddBody(*cube, 0.0f);
 	primitives.PushBack(cube);
 
-
-
-
-	float size = 10;
-
-	for (int i = 0; i < greentower_constraint.Count(); i++)
-	{
-		if (i > 0)
-		{
-			Primitive* n1 = *greentower_constraint.At(i);
-			Primitive* n2 = *greentower_constraint.At(i - 1);
-
-			App->physics->AddConstraintP2P(*n1->physbody, *n2->physbody, { 0,size,0 }, { 0,size+10,0 });
-			size += 10;
-
-		}
-	}
 
 	// Chekpoints
 	Cylinder* cylinder = new Cylinder(3.0f, 1.0f);
@@ -353,5 +337,29 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->collision_listeners.add(this);
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
+	cylinder = new Cylinder(3.0f, 1.0f);
+	cylinder->SetPos(350, 115, 200);	// greentower checkpoint
+	cylinder->color.r = 0;
+	cylinder->color.b = 255;
+	cylinder->color.g = 0;
+	cylinder->physbody = App->physics->AddBody(*cylinder, 0.0f);
+	primitives.PushBack(cylinder);
+	cylinder->physbody->SetAsSensor(true);
+	cylinder->physbody->collision_listeners.add(this);
+	cylinder->physbody->parent = cylinder;
+	sensors.PushBack(cylinder->physbody);
+	
+
+	float size = 10;
+	for (int i = 0; i < greentower_constraint.Count(); i++)
+	{
+		if (i > 0)
+		{
+			PhysBody3D* n1 = *greentower_constraint.At(i);
+			PhysBody3D* n2 = *greentower_constraint.At(i - 1);
+
+			App->physics->AddConstraintP2P(*n1, *n2, { 0,size,0 }, { 0, size + 10,0 });
+		}
+	}
 
 }
