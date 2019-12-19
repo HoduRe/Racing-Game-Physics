@@ -185,8 +185,14 @@ update_status ModulePlayer::Update(float dt)
 
 		break;
 
-	case player_state::ST_GO:
+	case player_state::ST_STEADY:
 
+		App->audio->PlayMusic("assets/initialD.ogg");
+
+		break;
+
+	case player_state::ST_GO:
+		
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 			if (velocity < 0)
@@ -261,10 +267,13 @@ void ModulePlayer::UpdateState()
 		case player_state::ST_READY:
 			if (chrono.Read() >= 3000)
 			{
-				state = player_state::ST_GO;
+				state = player_state::ST_STEADY;
 				chrono.Stop();
 				chrono.Start();
 			}
+			break;
+		case player_state::ST_STEADY:
+			state = player_state::ST_GO;
 			break;
 		case player_state::ST_GO:
 			if (checkpoints == num_checkpoints)

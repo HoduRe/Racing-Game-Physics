@@ -21,7 +21,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	checkpoint_fx = App->audio->LoadFx("assets/checkpoint.wav");
-	
+
 
 	CreateCircuit();
 
