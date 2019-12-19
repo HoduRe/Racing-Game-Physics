@@ -46,4 +46,5 @@ public:
 
 	p2DynArray<Primitive*> primitives;
 	p2DynArray<PhysBody3D*> sensors;
+	p2DynArray<Primitive*>greentower_constraint;
 };
