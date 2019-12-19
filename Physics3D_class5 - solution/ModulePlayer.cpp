@@ -76,7 +76,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 70.5;
 	car.maxSuspensionForce = 3000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -149,6 +149,7 @@ bool ModulePlayer::Start()
 
 	state = player_state::ST_READY;
 	start_fx = App->audio->LoadFx("assets/start.wav");
+	claxon_fx = App->audio->LoadFx("assets/claxon.wav");
 	chrono.Start();
 	
 
@@ -190,7 +191,7 @@ update_status ModulePlayer::Update(float dt)
 		{
 			if (velocity < 0)
 				brake = BRAKE_POWER;
-			else if (velocity < 130.0f)
+			else if (velocity < 150.0f)
 				acceleration = MAX_ACCELERATION;
 			else
 				acceleration = 0;
@@ -225,7 +226,10 @@ update_status ModulePlayer::Update(float dt)
 		break;
 		
 	}
-	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		App->audio->PlayFx(claxon_fx);
+	}
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		Restart();

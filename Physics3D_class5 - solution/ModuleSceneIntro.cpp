@@ -20,7 +20,8 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	
+	checkpoint_fx = App->audio->LoadFx("assets/checkpoint.wav");
+	App->audio->PlayMusic("assets/initialD.ogg");
 
 	CreateCircuit();
 
@@ -71,6 +72,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		body1->parent->color = Purple;
 		App->player->checkpoints++;
 		App->player->last_checkpoint_pos = body1->GetPos();
+		App->audio->PlayFx(checkpoint_fx);
 	}	
 }
 
@@ -305,7 +307,7 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
 	cylinder = new Cylinder(6.0f, 1.0f);
-	cylinder->SetPos(75, 84, -350);	// Ramps checkpoint
+	cylinder->SetPos(75, 78, -350);	// Ramps checkpoint
 	cylinder->color.r = 0;
 	cylinder->color.b = 255;
 	cylinder->color.g = 0;
@@ -348,7 +350,6 @@ void ModuleSceneIntro::CreateCircuit()
 	cylinder->physbody->collision_listeners.add(this);
 	cylinder->physbody->parent = cylinder;
 	sensors.PushBack(cylinder->physbody);
-	
 
 	float size = 10;
 	for (int i = 0; i < greentower_constraint.Count(); i++)

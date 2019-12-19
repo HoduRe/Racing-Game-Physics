@@ -24,13 +24,7 @@ public:
 	void CreateCircuit();
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
 
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
@@ -47,4 +41,6 @@ public:
 	p2DynArray<Primitive*> primitives;
 	p2DynArray<PhysBody3D*> sensors;
 	p2DynArray<PhysBody3D*> greentower_constraint;
+
+	uint checkpoint_fx;
 };

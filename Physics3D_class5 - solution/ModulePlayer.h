@@ -51,7 +51,9 @@ public:
 	player_state state;
 	Timer chrono;
 	Timer finish_timer;
+
 	uint start_fx;
+	uint claxon_fx;
 
 	uint checkpoints;
 	uint num_checkpoints;
