@@ -9,6 +9,7 @@ enum class player_state
 {
 	ST_NONE,
 	ST_READY,
+	ST_STEADY,
 	ST_GO,
 	ST_FINISH
 };
