@@ -1,7 +1,7 @@
 # Racing-Game-Physics
 A racing game for the physics subject at CITM's degree of videogame development. The objective is to get to all the checkpoints in the lowest time possible (it's indicated on the title of the window).
 
-### The project can be found at: https://github.com/ferba93/Racing-Game-Physics
+### The project can be found at: https://github.com/hodure/Racing-Game-Physics
 
 ## Installation
 
@@ -27,7 +27,7 @@ Currently there is no installation required, just open the .exe provided in the 
 
 Credits go to the team members: <br>
 	David Carrasquet Iniesta: <https://github.com/davidcarrasquet><br>
-	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
+	Ferran-Roger Basart i Bosch: <https://github.com/hodure><br>
 Also Credit to Dave Rodgers for the song "Deja vu" <br>
 
 ## License
